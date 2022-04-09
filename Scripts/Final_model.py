@@ -105,6 +105,52 @@ def primerjava_barva(main_barva, comp_barva, alfa_barva):
             return alfa_barva
     return 0
 
+# Izracunaj linearno regresijo
+
+
+import pandas as pd
+import numpy as np
+import random
+import statistics
+from sklearn.linear_model import LinearRegression
+import time
+from sklearn import linear_model
+import statsmodels.api as sm
+import statistics as stats
+
+min_cena = data_train["cena"].quantile(0.1)
+max_cena = data_train["cena"].quantile(0.9)
+data_train_for_univariate_linear_regression = data_train[(data_train.cena > min_cena) &  (data_train.cena < max_cena) ]
+
+# Fit starost
+
+data_train_for_multivariate_linear_regression_starost = data_train_for_univariate_linear_regression.dropna(subset=['starost'])
+
+X_starost = data_train_for_multivariate_linear_regression_starost[['starost']] # here we have 2 variables for multiple regression. If you just want to use one variable for simple linear regression, then use X = df['Interest_Rate'] for example.Alternatively, you may add additional variables within the brackets
+Y_starost = data_train_for_multivariate_linear_regression_starost['cena']
+
+regr_starost  = linear_model.LinearRegression()
+regr_starost.fit(X_starost, Y_starost)
+
+# Fit prevozeni_km
+
+data_train_for_multivariate_linear_regression_prevozeni_km = data_train_for_univariate_linear_regression.dropna(subset=['prevozeni_km'])
+
+X_prevozeni_km = data_train_for_multivariate_linear_regression_prevozeni_km[['prevozeni_km']] # here we have 2 variables for multiple regression. If you just want to use one variable for simple linear regression, then use X = df['Interest_Rate'] for example.Alternatively, you may add additional variables within the brackets
+Y_prevozeni_km = data_train_for_multivariate_linear_regression_prevozeni_km['cena']
+
+regr_prevozeni_km  = linear_model.LinearRegression()
+regr_prevozeni_km.fit(X_prevozeni_km, Y_prevozeni_km)
+
+# Fit ccm_class
+
+data_train_for_multivariate_linear_regression_ccm_class = data_train_for_univariate_linear_regression.dropna(subset=['ccm_class'])
+
+X_ccm_class = data_train_for_multivariate_linear_regression_ccm_class[['ccm_class']] # here we have 2 variables for multiple regression. If you just want to use one variable for simple linear regression, then use X = df['Interest_Rate'] for example.Alternatively, you may add additional variables within the brackets
+Y_ccm_class = data_train_for_multivariate_linear_regression_ccm_class['cena']
+
+regr_ccm_class  = linear_model.LinearRegression()
+regr_ccm_class.fit(X_ccm_class, Y_ccm_class)
 
 def Model_no_adjustments(train_data, test_data, parameters, number_of_neighbours = 5,run_name = None, save_name =None, save_results = False, save_directory="C:\\Users\\1roks\\Documents\\FMF\\Matematika z računalnikom\\Project\\Data\\Modeling results\\"):
     
@@ -277,6 +323,6 @@ def Model_no_adjustments(train_data, test_data, parameters, number_of_neighbours
     return valuation 
 
 
-parametri = [63.22345509493234, 28, 46, 46, 0.00020863861850860035, 181, 136, 5.054321049593293, 0.7242649646450485]
+parametri = [466.08948962340173, 66.31282221516274, 8.032452666952638, 24.750775012632552, 0.0003428115825366971, 15.163346734039667, 10.564472529982988, 24.706757162345852, 0.5105554347604646]
 	
 
